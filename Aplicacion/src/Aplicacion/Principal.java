@@ -51,46 +51,34 @@ public class Principal extends JFrame {
 		lblNewLabel.setBounds(363, 10, 122, 63);
 		contentPane.add(lblNewLabel);
 		
-		JButton btn_Restaurante = new JButton("Nuestros restaurantes.");
-		btn_Restaurante.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btn_Restaurante.addActionListener(new ActionListener() {
+		JButton btn_Restaurantes = new JButton("Nuestros Restaurantes");
+		btn_Restaurantes.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		btn_Restaurantes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Restaurantes nuevoIndex = new Restaurantes();
 				
 				nuevoIndex.setVisible(true);
 			}
 		});
-		btn_Restaurante.setBounds(10, 80, 198, 55);
-		contentPane.add(btn_Restaurante);
+		btn_Restaurantes.setBounds(10, 59, 198, 55);
+		contentPane.add(btn_Restaurantes);
 		
-		JButton btn_Restaurante_1 = new JButton("Nuestras Discotecas");
-		btn_Restaurante_1.addActionListener(new ActionListener() {
+		JButton btn_Discotecas = new JButton("Nuestras Discotecas");
+		btn_Discotecas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				Discotecas nuevoIndex = new Discotecas();
 				
-				Discoteca Disco = new Discoteca();
-				
-				Disco.setVisible(true);
+				nuevoIndex.setVisible(true);
 			}
 		});
-		btn_Restaurante_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_Restaurante_1.setBounds(10, 163, 198, 52);
-		contentPane.add(btn_Restaurante_1);
+		btn_Discotecas.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_Discotecas.setBounds(10, 124, 198, 52);
+		contentPane.add(btn_Discotecas);
 		
-		
-		//Boton cafe 
-		
-		JButton btn_Cafe = new JButton("Nuestras Cafeterías");
-		btn_Cafe.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Cafeteria Cafe = new Cafeteria();
-				
-				Cafe.setVisible(true);
-				
-			}
-		});
-		btn_Cafe.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_Cafe.setBounds(10, 243, 198, 52);
-		contentPane.add(btn_Cafe);
+		JButton btn_InicioSesion = new JButton("Iniciar Sesión");
+		btn_InicioSesion.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_InicioSesion.setBounds(457, 106, 198, 52);
+		contentPane.add(btn_InicioSesion);
 		
 			
 			

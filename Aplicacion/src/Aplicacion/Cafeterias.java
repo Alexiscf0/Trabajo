@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Discoteca extends JFrame {
+public class Cafeterias extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,7 +30,7 @@ public class Discoteca extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Discoteca frame = new Discoteca();
+					Discotecas frame = new Discotecas();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +42,7 @@ public class Discoteca extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Discoteca() {
+	public Cafeterias() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 840, 455);
 		contentPane = new JPanel();
@@ -61,21 +61,21 @@ public class Discoteca extends JFrame {
 		
 		//Boton Koko 
 		
-		JButton btn_Koko = new JButton("Koko");
-		btn_Koko.addActionListener(new ActionListener() {
+		JButton btn_Petisu = new JButton("Petisu");
+		btn_Petisu.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				nombreLocal = "Koko";
+				nombreLocal = "Petisu";
 				Index Disco = new Index ();
 
 				Disco.setVisible(true);
 			}
 		});
 		//btn_Macarella.setSelectedIcon(new ImageIcon("C:\\Users\\alexi\\Pictures\\Screenshots\\Captura de pantalla 2025-04-26 173053.png"));
-		btn_Koko.setBackground(new Color(220, 90, 35));
-		btn_Koko.setFont(new Font("Snap ITC", Font.ITALIC, 13));
-		btn_Koko.setBounds(31, 307, 117, 27);
-		contentPane.add(btn_Koko);
+		btn_Petisu.setBackground(new Color(220, 90, 35));
+		btn_Petisu.setFont(new Font("Snap ITC", Font.ITALIC, 13));
+		btn_Petisu.setBounds(31, 307, 117, 27);
+		contentPane.add(btn_Petisu);
 		
 		//Boton taberna manue
 		

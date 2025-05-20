@@ -1,6 +1,4 @@
 package Aplicacion;
-
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -37,7 +35,7 @@ public class ConexionMySQL {
      * @param bd Base de datos a la que nos conectamos
      */
     public ConexionMySQL(String usuario, String pass, String bd) {
-        HOST = "localhost";
+        HOST = "sql7.freesqldatabase.com";
         USUARIO = usuario;
         PASS = pass;
         BD = bd;
@@ -62,7 +60,7 @@ public class ConexionMySQL {
      *
      * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
      */
-    public void conectar() throws SQLException {
+    /*public void conectar() throws SQLException {
         if (connection == null || connection.isClosed()) {
             registrarDriver();
             // Obtengo la zona horaria
@@ -71,6 +69,27 @@ public class ConexionMySQL {
             connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + HOST + "/" + BD + "?user="
                     + USUARIO + "&password=" + PASS + "&useLegacyDatetimeCode=false&serverTimezone="
                     + zonahoraria.getID());
+        }
+    }*/
+    public void conectar() throws SQLException {
+        if (connection == null || connection.isClosed()) {
+            registrarDriver();
+
+            // Construcción correcta y clara de la URL
+            Calendar now = Calendar.getInstance();
+            zonahoraria = now.getTimeZone();  // Aunque opcional, se mantiene tu idea original
+
+            String url = String.format(
+                "jdbc:mysql://%s:3306/%s?user=%s&password=%s&useLegacyDatetimeCode=false&serverTimezone=%s",
+                HOST, BD, USUARIO, PASS, zonahoraria.getID()
+            );
+
+            try {
+                connection = DriverManager.getConnection(url);
+                System.out.println("Conexión establecida correctamente.");
+            } catch (SQLException e) {
+                throw new SQLException("Error al conectar con la base de datos: " + e.getMessage());
+            }
         }
     }
 

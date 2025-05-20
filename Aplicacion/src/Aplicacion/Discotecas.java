@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Cafeteria extends JFrame {
+public class Discotecas extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -30,7 +30,7 @@ public class Cafeteria extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Discoteca frame = new Discoteca();
+					Discotecas frame = new Discotecas();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -42,7 +42,7 @@ public class Cafeteria extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Cafeteria() {
+	public Discotecas() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 840, 455);
 		contentPane = new JPanel();
@@ -52,30 +52,30 @@ public class Cafeteria extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Nuestras Cafeterías");
+		JLabel lblNewLabel = new JLabel("Nuestras Discotecas");
 		lblNewLabel.setForeground(new Color(213, 115, 43));
 		lblNewLabel.setFont(new Font("Sylfaen", Font.PLAIN, 23));
 		lblNewLabel.setBounds(340, 10, 220, 47);
 		contentPane.add(lblNewLabel);
 			
 		
-		//Boton Petisu 
+		//Boton Koko 
 		
-		JButton btn_Petisu = new JButton("Petisu");
-		btn_Petisu.addActionListener(new ActionListener() {
+		JButton btn_Koko = new JButton("Koko");
+		btn_Koko.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent e) {
-				nombreLocal = "Petisu";
-				Index Cafeteria = new Index ();
+				nombreLocal = "Koko";
+				Index Disco = new Index ();
 
-				Cafeteria.setVisible(true);
+				Disco.setVisible(true);
 			}
 		});
 		//btn_Macarella.setSelectedIcon(new ImageIcon("C:\\Users\\alexi\\Pictures\\Screenshots\\Captura de pantalla 2025-04-26 173053.png"));
-		btn_Petisu.setBackground(new Color(220, 90, 35));
-		btn_Petisu.setFont(new Font("Snap ITC", Font.ITALIC, 13));
-		btn_Petisu.setBounds(31, 307, 117, 27);
-		contentPane.add(btn_Petisu);
+		btn_Koko.setBackground(new Color(220, 90, 35));
+		btn_Koko.setFont(new Font("Snap ITC", Font.ITALIC, 13));
+		btn_Koko.setBounds(31, 307, 117, 27);
+		contentPane.add(btn_Koko);
 		
 		//Boton taberna manue
 		
