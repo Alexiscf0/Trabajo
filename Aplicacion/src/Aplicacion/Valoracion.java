@@ -1,4 +1,4 @@
-package Aplicacion.Aplicacion;
+package Aplicacion;
 
 import java.awt.EventQueue;
 
@@ -29,28 +29,14 @@ public class Valoracion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textField;
-
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Valoracion frame = new Valoracion();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private JTextField textField_IntroducirValo;
+	private final ConexionMySQL conexion;
 
 	/**
 	 * Create the frame.
 	 */
-	public Valoracion() {
+	public Valoracion(ConexionMySQL conexion) {
+		this.conexion = null;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 839, 659);
 		contentPane = new JPanel();
@@ -64,43 +50,44 @@ public class Valoracion extends JFrame {
 		lblNewLabel.setBounds(281, 10, 278, 56);
 		contentPane.add(lblNewLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(433, 124, 96, 36);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		textField_IntroducirValo = new JTextField();
+		textField_IntroducirValo.setBounds(433, 124, 96, 36);
+		contentPane.add(textField_IntroducirValo);
+		textField_IntroducirValo.setColumns(10);
 		
-		JComboBox<String> comboBox_VALO = new JComboBox<>();
-
-		addWindowListener(new WindowAdapter() {
-		    public void windowOpened(WindowEvent e) {
-		    	System.out.println("aa");
-		      ConexionMySQL conexion = new ConexionMySQL("sql7779162", "LgB4QjTGIx", "sql7779162");
-
-		        String sql = "SELECT Nombre FROM locales";
+		
+		JComboBox <String> comboBox_VALO = new JComboBox<>();
+		comboBox_VALO.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				
+				/*
+				ConexionMySQL conexion = new ConexionMySQL("sql7779162", "LgB4QjTGIx", "sql7779162");
+				try {
+					conexion.conectar();
 		        	//Hacemos el select para seleccionar los nombres de la bbdd 
 		        	//Que tienen que salir en el Combobox
-		        try {
-		            conexion.conectar();
-		           
+					String sql = "SELECT 'Nombre' FROM 'locales'";
 		            ResultSet rs = conexion.ejecutarSelect(sql);
 		            //comboBox_VALO.addItem("Nombre");
 		           
 		            while (rs.next()) {
 		                String nombre = rs.getString("Nombre");
-		                //comboBox_VALO.addItem(nombre);
-		                System.out.println("aa");
+		                comboBox_VALO.addItem(nombre);
 		            }
 
 		            conexion.desconectar();
 		        } catch (SQLException e1) {
 		            System.out.println("Error al cargar locales: " + e1.getMessage());
 		        }
-		        
+		        */
 		    }
 		});
-
 		comboBox_VALO.setBounds(185, 123, 160, 36);
 		contentPane.add(comboBox_VALO);
+		
+		
 		
 	}
 		}
