@@ -17,27 +17,33 @@ public class Principal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
+	private final ConexionMySQL conexion;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Principal frame = new Principal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
+		ConexionMySQL connectionDB = new ConexionMySQL("sql7.freesqldatabase.com", "3306", "sql7779162", "LgB4QjTGIx", "sql7779162");
+		
+		if (connectionDB.success()) {
+			EventQueue.invokeLater(new Runnable() {
+				public void run() {
+					try {
+						Principal frame = new Principal(connectionDB);
+						frame.setVisible(true);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
 				}
-			}
-		});
+			});
+		}
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public Principal() {
+	public Principal(ConexionMySQL conexion) {
+		this.conexion = conexion;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 869, 552);
 		contentPane = new JPanel();
@@ -46,40 +52,101 @@ public class Principal extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Nombre app");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lblNewLabel.setBounds(363, 10, 122, 63);
-		contentPane.add(lblNewLabel);
+		JLabel lbl_NombreApp = new JLabel("Local-izados");
+		lbl_NombreApp.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		lbl_NombreApp.setBounds(280, 19, 122, 63);
+		contentPane.add(lbl_NombreApp);
 		
-		JButton btn_Restaurantes = new JButton("Nuestros Restaurantes");
+		
+		//Boton para ir a los Restaurantes
+		
+		JButton btn_Restaurantes = new JButton("Restaurantes");
 		btn_Restaurantes.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btn_Restaurantes.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Restaurantes nuevoIndex = new Restaurantes();
-				
-				nuevoIndex.setVisible(true);
-			}
+		btn_Restaurantes.addActionListener(e -> {
+			Restaurantes nuevoIndex = new Restaurantes(this.conexion);
+			
+			
+			nuevoIndex.setVisible(true);
 		});
-		btn_Restaurantes.setBounds(10, 59, 198, 55);
+		btn_Restaurantes.setBounds(10, 105, 198, 55);
 		contentPane.add(btn_Restaurantes);
 		
-		JButton btn_Discotecas = new JButton("Nuestras Discotecas");
-		btn_Discotecas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				Discotecas nuevoIndex = new Discotecas();
-				
+		
+		//Boton para ir a las Discotecas
+		
+		JButton btn_Discotecas = new JButton("Discotecas");
+		btn_Discotecas.addActionListener(e -> {
+				Discotecas nuevoIndex = new Discotecas(this.conexion);
 				nuevoIndex.setVisible(true);
-			}
 		});
 		btn_Discotecas.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_Discotecas.setBounds(10, 124, 198, 52);
+		btn_Discotecas.setBounds(10, 180, 198, 52);
 		contentPane.add(btn_Discotecas);
 		
+		
+		//Boton para ir a las Cafeterias
+		
+		JButton btn_Cafeterias = new JButton("Cafeterías");
+		btn_Cafeterias.addActionListener(e -> {
+			Cafeterias nuevoIndex = new Cafeterias(this.conexion);
+			nuevoIndex.setVisible(true);
+	});
+		btn_Cafeterias.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_Cafeterias.setBounds(10, 260, 198, 52);
+		contentPane.add(btn_Cafeterias);
+		
+		
+		
+			
+		//Boton para ir al Inicio de Sesion
+		
 		JButton btn_InicioSesion = new JButton("Iniciar Sesión");
+		btn_InicioSesion.addActionListener(e -> {
+				IniciarSesion nuevoInicio = new IniciarSesion(this.conexion);
+				
+				nuevoInicio.setVisible(true);
+		});
 		btn_InicioSesion.setFont(new Font("Tahoma", Font.PLAIN, 14));
 		btn_InicioSesion.setBounds(457, 106, 198, 52);
 		contentPane.add(btn_InicioSesion);
 		
+		
+		//Boton para ir al Registro de Usuario
+		
+		JButton btn_Registrarse = new JButton("Registrarse");
+		btn_Registrarse.addActionListener(e -> {
+				Registrar nuevoregistro = new Registrar(this.conexion);
+				
+				nuevoregistro.setVisible(true);
+		});
+		btn_Registrarse.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_Registrarse.setBounds(457, 180, 198, 52);
+		contentPane.add(btn_Registrarse);
+		
+		
+		//Boton para ir a la Valoración
+		
+		JButton btn_Valo = new JButton("Valoraciones");
+		btn_Valo.addActionListener(e -> {
+				Valoracion nuevaValo = new Valoracion(this.conexion);
+				
+				nuevaValo.setVisible(true);
+		});
+		btn_Valo.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		btn_Valo.setBounds(227, 299, 198, 52);
+		contentPane.add(btn_Valo);
+		
+			
+		/*
+		if (IniciarSesion.SesionIniciada = false) {
+			btn_InicioSesion.setVisible(true);
+			btn_Registrarse.setVisible(true);
+		}
+		else {
+			btn_InicioSesion.setVisible(false);
+			btn_Registrarse.setVisible(false);
+		}
+		*/
 			
 			
 			
