@@ -22,27 +22,13 @@ public class Cafeterias extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	static String nombreLocal;
-	//static String ArrayRestu = ;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Discotecas frame = new Discotecas();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	private final ConexionMySQL conexion;
 
 	/**
 	 * Create the frame.
 	 */
-	public Cafeterias() {
+	public Cafeterias(ConexionMySQL conexion) {
+		this.conexion = conexion;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 840, 455);
 		contentPane = new JPanel();
@@ -59,17 +45,14 @@ public class Cafeterias extends JFrame {
 		contentPane.add(lblNewLabel);
 			
 		
-		//Boton Koko 
+		//Boton Petisu 
 		
 		JButton btn_Petisu = new JButton("Petisu");
-		btn_Petisu.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
+		btn_Petisu.addActionListener(e -> {
 				nombreLocal = "Petisu";
-				Index Disco = new Index ();
+				Index Cafeteria = new Index (this.conexion);
 
-				Disco.setVisible(true);
-			}
+				Cafeteria.setVisible(true);
 		});
 		//btn_Macarella.setSelectedIcon(new ImageIcon("C:\\Users\\alexi\\Pictures\\Screenshots\\Captura de pantalla 2025-04-26 173053.png"));
 		btn_Petisu.setBackground(new Color(220, 90, 35));

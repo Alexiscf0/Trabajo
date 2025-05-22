@@ -1,134 +1,154 @@
-package Aplicacion;
+package Aplicacion.Aplicacion.Aplicacion.src.Aplicacion;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.Calendar;
-import java.util.TimeZone;
+import java.util.LinkedList;
 
-/**
- * Clase para la conexión con una base de datos MySQL
- *
- * @author Francisco Jesús Delgado Almirón
- */
 public class ConexionMySQL {
 
-    // Base de datos a la que nos conectamos
-    private String BD;
-    // Usuario de la base de datos
-    private String USUARIO;
-    // Contraseña del usuario de la base de datos
-    private String PASS;
-    // Objeto donde se almacenará nuestra conexión
-    private Connection connection;
-    // Indica que está en localhost
-    private String HOST;
-    // Zona horaria
-    private TimeZone zonahoraria;
-
-    /**
-     * Constructor de la clase
-     *
-     * @param usuario Usuario de la base de datos
-     * @param pass Contraseña del usuario
-     * @param bd Base de datos a la que nos conectamos
-     */
-    public ConexionMySQL(String usuario, String pass, String bd) {
-        HOST = "sql7.freesqldatabase.com";
-        USUARIO = usuario;
-        PASS = pass;
-        BD = bd;
-        connection = null;
-    }
-
-    /**
-     * Comprueba que el driver de MySQL esté correctamente integrado
-     *
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    private void registrarDriver() throws SQLException {
+	private Connection conexion;
+	
+	public ConexionMySQL(String host, String port, String user, String pass, String bd) {
+        String url = "jdbc:mysql://" + host + ":" + port + "/" + bd + "?useSSL=false&serverTimezone=UTC";
         try {
+            // Cargar el driver JDBC (opcional con JDBC 4.0+ pero recomendado)
             Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            throw new SQLException("Error al conectar con MySQL: " + e.getMessage());
+            this.conexion = DriverManager.getConnection(url, user, pass);
+        } catch (ClassNotFoundException | SQLException e) {
+            System.err.println(e);
+            this.conexion = null;
         }
     }
+	
+	public boolean success() {
+		return this.conexion != null;
+	}
+	
+	public DatosLocales getDatosLocales(String Nombre) {
+		String SQL = "SELECT * FROM locales WHERE Nombre = ?";
+		
+		try {
+			var stmt = this.conexion.prepareStatement(SQL);
+			stmt.setString(1, Nombre);
+			
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String nombre = rs.getString("Nombre");
+				String tipo = rs.getString("Tipo");
+				String ubicacion = rs.getString("Ubicacion");
+				Float valoracion = rs.getFloat("Valoracion");
+				
+				return new DatosLocales(nombre, tipo, ubicacion, valoracion);
+			}
+			
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+		return null;
+	}
+	
+	public LinkedList<String> getNombreLocales() {
+		String SQL = "SELECT Nombre FROM locales";
+		LinkedList<String> nombres = new LinkedList<>();
+		try {
+			var stmt = this.conexion.prepareStatement(SQL);
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next()) {
+				String nombre = rs.getString("Nombre");
+				nombres.add(nombre);
+				
+				return nombres;
+			}
+			
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+		return null;
+	}
+	
+	public DatosUsuarios getDatosUsuarios(String Nombre, String Contraseña) {
+		String SQL = "SELECT * FROM usuarios WHERE Nombre = ? AND Contrasena = ?";
+		
+		try {
+			var stmt = this.conexion.prepareStatement(SQL);
+			stmt.setString(1, Nombre);
+			stmt.setString(2, Contraseña);
+			
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String nombre = rs.getString("Nombre");
+				String contraseña = rs.getString("Contrasena");
+				
+				return new DatosUsuarios(nombre, contraseña);
+			}
+			
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+		return null;
+	}
+	
+	public String getNombreUsuario(String Nombre) {
+		String SQL = "SELECT Nombre FROM usuarios WHERE Nombre = ?";
+		
+		try {
+			var stmt = this.conexion.prepareStatement(SQL);
+			stmt.setString(1, Nombre);
+			
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String nombre = rs.getString("Nombre");
+				
+				return new String(nombre).trim();
+			}
+			
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+		return null;
+	}
+	
+	public boolean setNuevoUsuario(String Nombre, String Contraseña) {
+		String SQL = "INSERT INTO usuarios (Nombre, Contrasena) VALUES (?, ?)";
+		
+		try {
+			var stmt = this.conexion.prepareStatement(SQL);
+			stmt.setString(1, Nombre);
+			stmt.setString(2, Contraseña);
+			
+			stmt.executeUpdate();
+			
+				return true;
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		};
+		
+		return false;
+	}
+	
+	public void InsertUsuario() {
+		String SQL = "INSERT INTO 'usuarios'('Nombre', 'Contrasena' VALUES ([?], [?])";
+	}
 
-    /**
-     * Conecta con la base de datos
-     *
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    /*public void conectar() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            registrarDriver();
-            // Obtengo la zona horaria
-            Calendar now = Calendar.getInstance();
-            zonahoraria = now.getTimeZone();
-            connection = (Connection) DriverManager.getConnection("jdbc:mysql://" + HOST + "/" + BD + "?user="
-                    + USUARIO + "&password=" + PASS + "&useLegacyDatetimeCode=false&serverTimezone="
-                    + zonahoraria.getID());
-        }
-    }*/
-    public void conectar() throws SQLException {
-        if (connection == null || connection.isClosed()) {
-            registrarDriver();
-
-            // Construcción correcta y clara de la URL
-            Calendar now = Calendar.getInstance();
-            zonahoraria = now.getTimeZone();  // Aunque opcional, se mantiene tu idea original
-
-            String url = String.format(
-                "jdbc:mysql://%s:3306/%s?user=%s&password=%s&useLegacyDatetimeCode=false&serverTimezone=%s",
-                HOST, BD, USUARIO, PASS, zonahoraria.getID()
-            );
-
-            try {
-                connection = DriverManager.getConnection(url);
-                System.out.println("Conexión establecida correctamente.");
-            } catch (SQLException e) {
-                throw new SQLException("Error al conectar con la base de datos: " + e.getMessage());
-            }
-        }
-    }
-
-    /**
-     * Cierra la conexión con la base de datos
-     *
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    public void desconectar() throws SQLException {
-        if (connection != null && !connection.isClosed()) {
-            connection.close();
-        }
-    }
-
-    /**
-     * Ejecuta una consulta SELECT
-     *
-     * @param consulta Consulta SELECT a ejecutar
-     * @return Resultado de la consulta
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    public ResultSet ejecutarSelect(String consulta) throws SQLException {
-        Statement stmt = connection.createStatement();
-        ResultSet rset = stmt.executeQuery(consulta);
-
-        return rset;
-    }
-
-    /**
-     * Ejecuta una consulta INSERT, DELETE o UPDATE
-     *
-     * @param consulta Consulta INSERT, DELETE o UPDATE a ejecutar
-     * @return Cantidad de filas afectadas
-     * @throws SQLException Se lanzará cuando haya un fallo con la base de datos
-     */
-    public int ejecutarInsertDeleteUpdate(String consulta) throws SQLException {
-        Statement stmt = connection.createStatement();
-        int fila = stmt.executeUpdate(consulta);
-
-        return fila;
-    }
+	public ResultSet ejecutarSelect(String sql) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

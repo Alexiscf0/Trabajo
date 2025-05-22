@@ -22,27 +22,13 @@ public class Discotecas extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	static String nombreLocal;
-	//static String ArrayRestu = ;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Discotecas frame = new Discotecas();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
+	private final ConexionMySQL conexion;
+	
 	/**
 	 * Create the frame.
 	 */
-	public Discotecas() {
+	public Discotecas(ConexionMySQL conexion) {
+		this.conexion = conexion;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 840, 455);
 		contentPane = new JPanel();
@@ -62,57 +48,16 @@ public class Discotecas extends JFrame {
 		//Boton Koko 
 		
 		JButton btn_Koko = new JButton("Koko");
-		btn_Koko.addActionListener(new ActionListener() {
-			
-			public void actionPerformed(ActionEvent e) {
+		btn_Koko.addActionListener(e -> {
 				nombreLocal = "Koko";
-				Index Disco = new Index ();
+				Index Discoteca = new Index (this.conexion);
 
-				Disco.setVisible(true);
-			}
+				Discoteca.setVisible(true);
 		});
-		//btn_Macarella.setSelectedIcon(new ImageIcon("C:\\Users\\alexi\\Pictures\\Screenshots\\Captura de pantalla 2025-04-26 173053.png"));
+		//btn_Macarella.setSelectedIcon(new ImageIcon(""));
 		btn_Koko.setBackground(new Color(220, 90, 35));
 		btn_Koko.setFont(new Font("Snap ITC", Font.ITALIC, 13));
 		btn_Koko.setBounds(31, 307, 117, 27);
 		contentPane.add(btn_Koko);
-		
-		//Boton taberna manue
-		
-	/*	JButton btn_Manue = new JButton("Taberna Manue");
-		btn_Manue.addActionListener(new ActionListener() {
-			
-			 public void actionPerformed(ActionEvent e) {
-				 nombreRestaurante = "Taberna Manue";
-				 Index Restu2 = new Index();
-				
-				Restu2.setVisible(true);
-			}
-		});
-		//btn_Manue.setSelectedIcon(new ImageIcon("C:\\Users\\alexi\\Pictures\\Screenshots\\Captura de pantalla 2025-04-26 173053.png"));
-		btn_Manue.setFont(new Font("Snap ITC", Font.ITALIC, 13));
-		btn_Manue.setBackground(new Color(220, 90, 35));
-		btn_Manue.setBounds(31, 344, 157, 27);
-		contentPane.add(btn_Manue);
-		
-		
-		//Boton Cateto
-		
-		JButton btn_Cateto = new JButton("El cateto");
-		btn_Cateto.addActionListener(new ActionListener() {
-			
-			 public void actionPerformed(ActionEvent e) {
-				 nombreRestaurante = "Cateto";
-				 Index Restu3 = new Index();
-				
-				Restu3.setVisible(true);
-			}
-		});
-		//btn_Cateto.setSelectedIcon(new ImageIcon("C:\\Users\\alexi\\Pictures\\Screenshots\\Captura de pantalla 2025-04-26 173053.png"));
-		btn_Cateto.setFont(new Font("Snap ITC", Font.ITALIC, 13));
-		btn_Cateto.setBackground(new Color(220, 90, 35));
-		btn_Cateto.setBounds(31, 381, 157, 27);
-		contentPane.add(btn_Cateto);
-		*/
 	}
 }

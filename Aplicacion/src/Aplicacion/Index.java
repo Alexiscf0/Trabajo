@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import Aplicacion.ConexionMySQL;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.sql.ResultSet;
@@ -22,19 +23,15 @@ public class Index extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextArea textArea_Tipo;
-
-	/**
-	 * Launch the application.
-	 */
+	private final ConexionMySQL conexion;
 	
 	
-
 	/**
 	 * Create the frame.
 	 */
 	
-	
-	public Index() {
+	public Index(ConexionMySQL conexion) {
+		this.conexion = null;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -72,7 +69,7 @@ public class Index extends JFrame {
 		lbl_Tipo.setBounds(10, 90, 76, 25);
 		contentPane.add(lbl_Tipo);
 		
-		textArea_Tipo = new JTextArea();
+		JTextArea textArea_Tipo = new JTextArea();
 		textArea_Tipo.setBounds(106, 92, 144, 25);
 		contentPane.add(textArea_Tipo);
 		
@@ -90,87 +87,40 @@ public class Index extends JFrame {
 		
 		
 		//Conexion con la base de datos
+		DatosLocales datosRestaurante = conexion.getDatosLocales(Restaurantes.nombreLocal);
 		
-		ConexionMySQL conexion = new ConexionMySQL("sql7779162", "LgB4QjTGIx", "sql7779162");
-		try {
-			conexion.conectar();
-			String sentencia= "SELECT * FROM locales WHERE Nombre = '" + Restaurantes.nombreLocal + "'";
-			ResultSet x = conexion.ejecutarSelect(sentencia);
-			System.out.println("aa");
-		while (x.next()!=false) {
-				
-					String ubicacion=x.getString("Ubicacion");
-					textArea_Ubi.setText(ubicacion);
-					
-					String tipo=x.getString("Tipo");
-					textArea_Tipo.setText(tipo);
-					
-					String Nombre=x.getString("Nombre");
-					lbl_titulo.setText(Nombre);
-					
-					Float Valo=x.getFloat("Valoracion");
-					String nuevoString = Valo+" ";
-						textArea_Valo.setText(nuevoString);
-						
-			}
-		conexion.desconectar();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
+		if (datosRestaurante != null) {
+			lbl_titulo.setText(datosRestaurante.getNombre());
+			textArea_Ubi.setText(datosRestaurante.getUbicacion());
+			textArea_Tipo.setText(datosRestaurante.getTipo());
+			
+			String ValoString = datosRestaurante.getValoracion()+"";
+			textArea_Valo.setText(ValoString);
+		}
 		
-		try {
-			conexion.conectar();
-			String sentencia= "SELECT * FROM locales WHERE Nombre = '" + Discotecas.nombreLocal + "'";
-			ResultSet x = conexion.ejecutarSelect(sentencia);
-			System.out.println("aa");
-		while (x.next()!=false) {
-				
-					String ubicacion=x.getString("Ubicacion");
-					textArea_Ubi.setText(ubicacion);
-					
-					String tipo=x.getString("Tipo");
-					textArea_Tipo.setText(tipo);
-					
-					String Nombre=x.getString("Nombre");
-					lbl_titulo.setText(Nombre);
-					
-					Float Valo=x.getFloat("Valoracion");
-					String nuevoString = Valo+" ";
-						textArea_Valo.setText(nuevoString);
-						
-			}
-		conexion.desconectar();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
-	
-		try {
-			conexion.conectar();
-			String sentencia= "SELECT * FROM locales WHERE Nombre = '" + Cafeterias.nombreLocal + "'";
-			ResultSet x = conexion.ejecutarSelect(sentencia);
-			System.out.println("aa");
-		while (x.next()!=false) {
-				
-					String ubicacion=x.getString("Ubicacion");
-					textArea_Ubi.setText(ubicacion);
-					
-					String tipo=x.getString("Tipo");
-					textArea_Tipo.setText(tipo);
-					
-					String Nombre=x.getString("Nombre");
-					lbl_titulo.setText(Nombre);
-					
-					Float Valo=x.getFloat("Valoracion");
-					String nuevoString = Valo+" ";
-						textArea_Valo.setText(nuevoString);
-						
-			}
-		conexion.desconectar();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		};
+		
+		DatosLocales datosDiscoteca = conexion.getDatosLocales(Discotecas.nombreLocal);
+		
+		if (datosDiscoteca != null) {
+			lbl_titulo.setText(datosDiscoteca.getNombre());
+			textArea_Ubi.setText(datosDiscoteca.getUbicacion());
+			textArea_Tipo.setText(datosDiscoteca.getTipo());
+			
+			String ValoString = datosDiscoteca.getValoracion()+"";
+			textArea_Valo.setText(ValoString);
+		}
+		
+		
+		DatosLocales datosCafeteria = conexion.getDatosLocales(Cafeterias.nombreLocal);
+		
+		if (datosCafeteria != null) {
+			lbl_titulo.setText(datosCafeteria.getNombre());
+			textArea_Ubi.setText(datosCafeteria.getUbicacion());
+			textArea_Tipo.setText(datosCafeteria.getTipo());
+			
+			String ValoString = datosCafeteria.getValoracion()+"";
+			textArea_Valo.setText(ValoString);
+		}
+		
 		}
 	}
