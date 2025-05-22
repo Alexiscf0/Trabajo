@@ -24,7 +24,6 @@ public class Registrar extends JFrame {
 	
 	private String contraseñaUsuario;
 	private String nombreUsuario;
-	static Boolean SesionIniciada = false;
 	private final ConexionMySQL conexion;
 	
 	/**
@@ -68,28 +67,35 @@ public class Registrar extends JFrame {
 		//Boton Registro Usuario
 		
 		btn_Registrarse = new JButton("Registrarse");
-		btn_Registrarse.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		btn_Registrarse.addActionListener(e -> {
 				nombreUsuario = txtIntroduceTuNombre.getText();
 				contraseñaUsuario = txtIntroduceTuContrasea.getText();
 				
-				//Conexion Base de Datos
+				
+				//Conexion Base de Datos y creación del Usuario
 				
 				String datosUsuario = conexion.getNombreUsuario(nombreUsuario);
+				if (datosUsuario == null) {
+					datosUsuario = "";
+				}
+				System.out.println("datosUsuario_BDD " + datosUsuario);
+				System.out.println("nombreUsuario_introducido " + nombreUsuario);
+				System.out.println(nombreUsuario.equals(datosUsuario));
 				
-				if (nombreUsuario == datosUsuario) {
+				if (nombreUsuario.equals(datosUsuario)) {
 					JOptionPane.showMessageDialog(null, "Ya hay un usuario registrado con este nombre.");
 				}
 				else {
-					DatosUsuarios nuevoUsuario = conexion.setNuevoUsuario(nombreUsuario, contraseñaUsuario);
-					if (nombreUsuario == datosUsuario) {
+					boolean usuariocreado = conexion.setNuevoUsuario(nombreUsuario, contraseñaUsuario);
+					if (usuariocreado) {
+						DatosUsuarios nuevoUsuario = new DatosUsuarios(nombreUsuario, contraseñaUsuario);
 						JOptionPane.showMessageDialog(null, "El usuario ha sido creado con éxito.");
+						IniciarSesion.SesionIniciada = true;
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear el usuario intentelo de nuevo.");
 					}
 				}
-			}
 		});
 		btn_Registrarse.setBounds(173, 212, 117, 29);
 		contentPane.add(btn_Registrarse);

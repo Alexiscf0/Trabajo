@@ -57,32 +57,9 @@ public class Valoracion extends JFrame {
 		
 		
 		JComboBox <String> comboBox_VALO = new JComboBox<>();
-		comboBox_VALO.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+		comboBox_VALO.addActionListener(e -> {
 				
-				
-				
-				/*
-				ConexionMySQL conexion = new ConexionMySQL("sql7779162", "LgB4QjTGIx", "sql7779162");
-				try {
-					conexion.conectar();
-		        	//Hacemos el select para seleccionar los nombres de la bbdd 
-		        	//Que tienen que salir en el Combobox
-					String sql = "SELECT 'Nombre' FROM 'locales'";
-		            ResultSet rs = conexion.ejecutarSelect(sql);
-		            //comboBox_VALO.addItem("Nombre");
-		           
-		            while (rs.next()) {
-		                String nombre = rs.getString("Nombre");
-		                comboBox_VALO.addItem(nombre);
-		            }
-
-		            conexion.desconectar();
-		        } catch (SQLException e1) {
-		            System.out.println("Error al cargar locales: " + e1.getMessage());
-		        }
-		        */
-		    }
+			
 		});
 		comboBox_VALO.setBounds(185, 123, 160, 36);
 		contentPane.add(comboBox_VALO);
