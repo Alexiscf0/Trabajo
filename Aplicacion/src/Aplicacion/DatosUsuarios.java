@@ -15,6 +15,7 @@ public class DatosUsuarios {
 		this.Nombre = nombre;
 	}
 	
+	
 	public String getNombre() {
 		return this.Nombre;
 	}

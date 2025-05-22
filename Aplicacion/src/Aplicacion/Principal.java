@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -137,8 +138,8 @@ public class Principal extends JFrame {
 		contentPane.add(btn_Valo);
 		
 			
-		/*
-		if (IniciarSesion.SesionIniciada = false) {
+		
+		if (IniciarSesion.SesionIniciada == false) {
 			btn_InicioSesion.setVisible(true);
 			btn_Registrarse.setVisible(true);
 		}
@@ -146,8 +147,6 @@ public class Principal extends JFrame {
 			btn_InicioSesion.setVisible(false);
 			btn_Registrarse.setVisible(false);
 		}
-		*/
-			
 			
 			
 	}

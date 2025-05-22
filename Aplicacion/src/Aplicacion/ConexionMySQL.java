@@ -100,7 +100,7 @@ public class ConexionMySQL {
 	}
 	
 	public String getNombreUsuario(String Nombre) {
-		String SQL = "SELECT * FROM usuarios WHERE Nombre = ?";
+		String SQL = "SELECT Nombre FROM usuarios WHERE Nombre = ?";
 		
 		try {
 			var stmt = this.conexion.prepareStatement(SQL);
@@ -110,7 +110,7 @@ public class ConexionMySQL {
 			if (rs.next()) {
 				String nombre = rs.getString("Nombre");
 				
-				return new String(nombre);
+				return new String(nombre).trim();
 			}
 			
 		}
@@ -122,7 +122,7 @@ public class ConexionMySQL {
 		return null;
 	}
 	
-	public DatosUsuarios setNuevoUsuario(String Nombre, String Contraseña) {
+	public boolean setNuevoUsuario(String Nombre, String Contraseña) {
 		String SQL = "INSERT INTO usuarios (Nombre, Contrasena) VALUES (?, ?)";
 		
 		try {
@@ -130,21 +130,16 @@ public class ConexionMySQL {
 			stmt.setString(1, Nombre);
 			stmt.setString(2, Contraseña);
 			
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				String nombre = rs.getString("Nombre");
-				String contraseña = rs.getString("Contrasena");
-				
-				return new DatosUsuarios(nombre);
-			}
+			stmt.executeUpdate();
 			
+				return true;
 		}
 		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		};
 		
-		return null;
+		return false;
 	}
 	
 	public void InsertUsuario() {
