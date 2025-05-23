@@ -19,18 +19,15 @@ public class Registrar extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField txtIntroduceTuNombre;
-	private JTextField txtIntroduceTuContrasea;
+	private JTextField txtIntroduceTuContraseña;
 	private JButton btn_Registrarse;
 	
 	private String contraseñaUsuario;
-	private String nombreUsuario;
-	private final ConexionMySQL conexion;
 	
 	/**
 	 * Create the frame.
 	 */
 	public Registrar(ConexionMySQL conexion) {
-		this.conexion = null;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -58,44 +55,49 @@ public class Registrar extends JFrame {
 		lbl_ContraseñaUsuario.setBounds(150, 120, 121, 16);
 		contentPane.add(lbl_ContraseñaUsuario);
 		
-		txtIntroduceTuContrasea = new JTextField();
-		txtIntroduceTuContrasea.setColumns(10);
-		txtIntroduceTuContrasea.setBounds(150, 148, 177, 26);
-		contentPane.add(txtIntroduceTuContrasea);
+		txtIntroduceTuContraseña = new JTextField();
+		txtIntroduceTuContraseña.setColumns(10);
+		txtIntroduceTuContraseña.setBounds(150, 148, 177, 26);
+		contentPane.add(txtIntroduceTuContraseña);
 		
 		
 		//Boton Registro Usuario
 		
 		btn_Registrarse = new JButton("Registrarse");
 		btn_Registrarse.addActionListener(e -> {
-				nombreUsuario = txtIntroduceTuNombre.getText();
-				contraseñaUsuario = txtIntroduceTuContrasea.getText();
+			IniciarSesion.nombreUsuario = txtIntroduceTuNombre.getText().trim();
+			contraseñaUsuario = txtIntroduceTuContraseña.getText().trim();
 				
 				
-				//Conexion Base de Datos y creación del Usuario
-				
-				String datosUsuario = conexion.getNombreUsuario(nombreUsuario);
-				if (datosUsuario == null) {
-					datosUsuario = "";
-				}
-				System.out.println("datosUsuario_BDD " + datosUsuario);
-				System.out.println("nombreUsuario_introducido " + nombreUsuario);
-				System.out.println(nombreUsuario.equals(datosUsuario));
-				
-				if (nombreUsuario.equals(datosUsuario)) {
-					JOptionPane.showMessageDialog(null, "Ya hay un usuario registrado con este nombre.");
-				}
-				else {
-					boolean usuariocreado = conexion.setNuevoUsuario(nombreUsuario, contraseñaUsuario);
+			//Conexion Base de Datos y creación del Usuario
+			
+			String datosUsuario = conexion.getNombreUsuario(IniciarSesion.nombreUsuario);
+			if (datosUsuario == null) {
+				datosUsuario = "";
+			}
+			
+			
+			if (IniciarSesion.nombreUsuario.equals(datosUsuario)) {
+				JOptionPane.showMessageDialog(null, "Ya hay un usuario registrado con este nombre.");
+				IniciarSesion.SesionIniciada = false;
+			}
+			else {
+				if (!contraseñaUsuario.trim().isEmpty()) {
+					boolean usuariocreado = conexion.setNuevoUsuario(IniciarSesion.nombreUsuario, contraseñaUsuario);
 					if (usuariocreado) {
-						DatosUsuarios nuevoUsuario = new DatosUsuarios(nombreUsuario, contraseñaUsuario);
+						DatosUsuarios nuevoUsuario = new DatosUsuarios(IniciarSesion.nombreUsuario, contraseñaUsuario);
 						JOptionPane.showMessageDialog(null, "El usuario ha sido creado con éxito.");
 						IniciarSesion.SesionIniciada = true;
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "Ha ocurrido un error al crear el usuario intentelo de nuevo.");
+						IniciarSesion.SesionIniciada = false;
 					}
 				}
+				else {
+					JOptionPane.showMessageDialog(null, "Falta una contraseña.");
+				}
+			}
 		});
 		btn_Registrarse.setBounds(173, 212, 117, 29);
 		contentPane.add(btn_Registrarse);

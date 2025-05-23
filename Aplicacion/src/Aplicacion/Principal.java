@@ -18,20 +18,19 @@ public class Principal extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private final ConexionMySQL conexion;
 
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		ConexionMySQL connectionDB = new ConexionMySQL("sql7.freesqldatabase.com", "3306", "sql7779162", "LgB4QjTGIx", "sql7779162");
+		ConexionMySQL connectionDB = new ConexionMySQL("localhost", "3306", "root", "", "sql7779162");
 		
 		if (connectionDB.success()) {
 			EventQueue.invokeLater(new Runnable() {
 				public void run() {
 					try {
-						Principal frame = new Principal(connectionDB);
-						frame.setVisible(true);
+						Principal Principal = new Principal(connectionDB);
+						Principal.setVisible(true);
 					} catch (Exception e) {
 						e.printStackTrace();
 					}
@@ -44,7 +43,6 @@ public class Principal extends JFrame {
 	 * Create the frame.
 	 */
 	public Principal(ConexionMySQL conexion) {
-		this.conexion = conexion;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 869, 552);
 		contentPane = new JPanel();
@@ -54,46 +52,60 @@ public class Principal extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lbl_NombreApp = new JLabel("Local-izados");
+		lbl_NombreApp.setBounds(229, 19, 122, 63);
 		lbl_NombreApp.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		lbl_NombreApp.setBounds(280, 19, 122, 63);
 		contentPane.add(lbl_NombreApp);
 		
 		
 		//Boton para ir a los Restaurantes
 		
 		JButton btn_Restaurantes = new JButton("Restaurantes");
+		btn_Restaurantes.setBounds(56, 105, 198, 55);
 		btn_Restaurantes.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btn_Restaurantes.addActionListener(e -> {
-			Restaurantes nuevoIndex = new Restaurantes(this.conexion);
+			Restaurantes nuevoIndex = new Restaurantes(conexion);
 			
 			
 			nuevoIndex.setVisible(true);
 		});
-		btn_Restaurantes.setBounds(10, 105, 198, 55);
 		contentPane.add(btn_Restaurantes);
+		
+		
+		//Boton para ir a las Cervecerías
+		
+		JButton btn_Cerveceria = new JButton("Cervecerías");
+		btn_Cerveceria.addActionListener(e -> {
+			Cervecerias nuevoIndex = new Cervecerias(conexion);
+			
+			
+			nuevoIndex.setVisible(true);
+		});
+		btn_Cerveceria.setBounds(325, 105, 198, 55);
+		btn_Cerveceria.setFont(new Font("Tahoma", Font.PLAIN, 15));
+		contentPane.add(btn_Cerveceria);
 		
 		
 		//Boton para ir a las Discotecas
 		
 		JButton btn_Discotecas = new JButton("Discotecas");
+		btn_Discotecas.setBounds(56, 172, 198, 52);
 		btn_Discotecas.addActionListener(e -> {
-				Discotecas nuevoIndex = new Discotecas(this.conexion);
+				Discotecas nuevoIndex = new Discotecas(conexion);
 				nuevoIndex.setVisible(true);
 		});
 		btn_Discotecas.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_Discotecas.setBounds(10, 180, 198, 52);
 		contentPane.add(btn_Discotecas);
 		
 		
 		//Boton para ir a las Cafeterias
 		
 		JButton btn_Cafeterias = new JButton("Cafeterías");
+		btn_Cafeterias.setBounds(325, 172, 198, 52);
 		btn_Cafeterias.addActionListener(e -> {
-			Cafeterias nuevoIndex = new Cafeterias(this.conexion);
+			Cafeterias nuevoIndex = new Cafeterias(conexion);
 			nuevoIndex.setVisible(true);
 	});
 		btn_Cafeterias.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_Cafeterias.setBounds(10, 260, 198, 52);
 		contentPane.add(btn_Cafeterias);
 		
 		
@@ -102,52 +114,41 @@ public class Principal extends JFrame {
 		//Boton para ir al Inicio de Sesion
 		
 		JButton btn_InicioSesion = new JButton("Iniciar Sesión");
+		btn_InicioSesion.setBounds(638, 172, 198, 52);
 		btn_InicioSesion.addActionListener(e -> {
-				IniciarSesion nuevoInicio = new IniciarSesion(this.conexion);
+				IniciarSesion nuevoInicio = new IniciarSesion(conexion);
 				
 				nuevoInicio.setVisible(true);
 		});
 		btn_InicioSesion.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_InicioSesion.setBounds(457, 106, 198, 52);
 		contentPane.add(btn_InicioSesion);
 		
 		
 		//Boton para ir al Registro de Usuario
 		
 		JButton btn_Registrarse = new JButton("Registrarse");
+		btn_Registrarse.setBounds(638, 265, 198, 52);
 		btn_Registrarse.addActionListener(e -> {
-				Registrar nuevoregistro = new Registrar(this.conexion);
+				Registrar nuevoregistro = new Registrar(conexion);
 				
 				nuevoregistro.setVisible(true);
 		});
 		btn_Registrarse.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_Registrarse.setBounds(457, 180, 198, 52);
 		contentPane.add(btn_Registrarse);
 		
 		
 		//Boton para ir a la Valoración
 		
 		JButton btn_Valo = new JButton("Valoraciones");
+		btn_Valo.setBounds(192, 320, 198, 52);
 		btn_Valo.addActionListener(e -> {
-				Valoracion nuevaValo = new Valoracion(this.conexion);
+				Valoracion nuevaValo = new Valoracion(conexion);
 				
 				nuevaValo.setVisible(true);
 		});
 		btn_Valo.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		btn_Valo.setBounds(227, 299, 198, 52);
 		contentPane.add(btn_Valo);
 		
-			
-		
-		if (IniciarSesion.SesionIniciada == false) {
-			btn_InicioSesion.setVisible(true);
-			btn_Registrarse.setVisible(true);
-		}
-		else {
-			btn_InicioSesion.setVisible(false);
-			btn_Registrarse.setVisible(false);
-		}
-			
-			
 	}
+
 }
