@@ -24,19 +24,13 @@ public class IniciarSesion extends JFrame {
 	private JButton btn_InicioSesion;
 	
 	private String contraseñaUsuario;
-	private String nombreUsuario;
+	static String nombreUsuario;
 	static Boolean SesionIniciada = false;
-	
-	private final ConexionMySQL conexion;
-	//private JLabel lbl_UsuarioIncorrecto;
-	//private JLabel lbl_ContraseñaIncorrecta;
-
 
 	/**
 	 * Create the frame.
 	 */
 	public IniciarSesion(ConexionMySQL conexion) {
-		this.conexion = null;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -73,44 +67,27 @@ public class IniciarSesion extends JFrame {
 		//Boton Inicio Sesion
 		
 		btn_InicioSesion = new JButton("Iniciar Sesión");
-		btn_InicioSesion.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				nombreUsuario = txt_NombreUsuario.getText();
-				contraseñaUsuario = txt_ContraseñaUsuario.getText();
-				
-				//Conexion Base de Datos
-				
-				DatosUsuarios datosUsuario = conexion.getDatosUsuarios(nombreUsuario, contraseñaUsuario);
-				
-				if (datosUsuario != null) {
-					SesionIniciada = true;
-					JOptionPane.showMessageDialog(null, "Sesión iniciada correctamente");
-					dispose();
-					
-				}
-				else {
-					JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto");
-				}
-			}
+		btn_InicioSesion.addActionListener(e -> {
+		nombreUsuario = txt_NombreUsuario.getText();
+		contraseñaUsuario = txt_ContraseñaUsuario.getText();
+		
+		//Conexion Base de Datos
+		
+		DatosUsuarios datosUsuario = conexion.getDatosUsuarios(nombreUsuario, contraseñaUsuario);
+		
+		if (datosUsuario != null) {
+			SesionIniciada = true;
+			JOptionPane.showMessageDialog(null, "Sesión iniciada correctamente");
+			dispose();
+		}
+		else {
+			JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrecto");
+			SesionIniciada = false;
+		}
+			
 		});
 		btn_InicioSesion.setBounds(172, 211, 117, 29);
 		contentPane.add(btn_InicioSesion);
-		
-		
-		/*
-		lbl_UsuarioIncorrecto = new JLabel("El usuario introducido es incorrecto");
-		lbl_UsuarioIncorrecto.setForeground(new Color(255, 35, 20));
-		lbl_UsuarioIncorrecto.setBounds(115, 78, 254, 16);
-		contentPane.add(lbl_UsuarioIncorrecto);
-		lbl_UsuarioIncorrecto.setVisible(false);
-		
-		lbl_ContraseñaIncorrecta = new JLabel("La contraseña introducida es incorrecta");
-		lbl_ContraseñaIncorrecta.setForeground(new Color(255, 35, 20));
-		lbl_ContraseñaIncorrecta.setBounds(115, 173, 254, 16);
-		contentPane.add(lbl_ContraseñaIncorrecta);
-		lbl_ContraseñaIncorrecta.setVisible(false);
-		*/
-		
 		
 	}
 }

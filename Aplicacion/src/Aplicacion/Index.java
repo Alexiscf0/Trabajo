@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import Aplicacion.ConexionMySQL;
+import Aplicacion.*;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,15 +23,12 @@ public class Index extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextArea textArea_Tipo;
-	private final ConexionMySQL conexion;
-	
 	
 	/**
 	 * Create the frame.
 	 */
 	
 	public Index(ConexionMySQL conexion) {
-		this.conexion = null;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -94,7 +91,19 @@ public class Index extends JFrame {
 			textArea_Ubi.setText(datosRestaurante.getUbicacion());
 			textArea_Tipo.setText(datosRestaurante.getTipo());
 			
-			String ValoString = datosRestaurante.getValoracion()+"";
+			String ValoString = datosRestaurante.getValoracion() + "";
+			textArea_Valo.setText(ValoString);
+		}
+		
+		
+		DatosLocales datosCerveceria = conexion.getDatosLocales(Cervecerias.nombreLocal);
+		
+		if (datosCerveceria != null) {
+			lbl_titulo.setText(datosCerveceria.getNombre());
+			textArea_Ubi.setText(datosCerveceria.getUbicacion());
+			textArea_Tipo.setText(datosCerveceria.getTipo());
+			
+			String ValoString = datosCerveceria.getValoracion() + "";
 			textArea_Valo.setText(ValoString);
 		}
 		
@@ -106,7 +115,7 @@ public class Index extends JFrame {
 			textArea_Ubi.setText(datosDiscoteca.getUbicacion());
 			textArea_Tipo.setText(datosDiscoteca.getTipo());
 			
-			String ValoString = datosDiscoteca.getValoracion()+"";
+			String ValoString = datosDiscoteca.getValoracion() + "";
 			textArea_Valo.setText(ValoString);
 		}
 		
@@ -118,7 +127,7 @@ public class Index extends JFrame {
 			textArea_Ubi.setText(datosCafeteria.getUbicacion());
 			textArea_Tipo.setText(datosCafeteria.getTipo());
 			
-			String ValoString = datosCafeteria.getValoracion()+"";
+			String ValoString = datosCafeteria.getValoracion() + "";
 			textArea_Valo.setText(ValoString);
 		}
 		

@@ -22,13 +22,11 @@ public class Discotecas extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	static String nombreLocal;
-	private final ConexionMySQL conexion;
 	
 	/**
 	 * Create the frame.
 	 */
 	public Discotecas(ConexionMySQL conexion) {
-		this.conexion = conexion;
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 840, 455);
 		contentPane = new JPanel();
@@ -38,7 +36,7 @@ public class Discotecas extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Nuestras Discotecas");
+		JLabel lblNewLabel = new JLabel("Discotecas");
 		lblNewLabel.setForeground(new Color(213, 115, 43));
 		lblNewLabel.setFont(new Font("Sylfaen", Font.PLAIN, 23));
 		lblNewLabel.setBounds(340, 10, 220, 47);
@@ -50,14 +48,29 @@ public class Discotecas extends JFrame {
 		JButton btn_Koko = new JButton("Koko");
 		btn_Koko.addActionListener(e -> {
 				nombreLocal = "Koko";
-				Index Discoteca = new Index (this.conexion);
+				Index Discoteca = new Index(conexion);
 
 				Discoteca.setVisible(true);
 		});
 		//btn_Macarella.setSelectedIcon(new ImageIcon(""));
 		btn_Koko.setBackground(new Color(220, 90, 35));
 		btn_Koko.setFont(new Font("Snap ITC", Font.ITALIC, 13));
-		btn_Koko.setBounds(31, 307, 117, 27);
+		btn_Koko.setBounds(198, 157, 117, 27);
 		contentPane.add(btn_Koko);
+		
+		
+		//Boton Abril
+		
+		JButton btn_Abril = new JButton("Abril");
+		btn_Abril.addActionListener(e -> {
+			nombreLocal = "Abril";
+			Index Discoteca = new Index(conexion);
+
+			Discoteca.setVisible(true);
+	});
+		btn_Abril.setFont(new Font("Dialog", Font.ITALIC, 13));
+		btn_Abril.setBackground(new Color(220, 90, 35));
+		btn_Abril.setBounds(491, 157, 117, 27);
+		contentPane.add(btn_Abril);
 	}
 }

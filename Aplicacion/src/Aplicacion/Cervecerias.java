@@ -17,7 +17,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Restaurantes extends JFrame {
+public class Cervecerias extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -26,7 +26,7 @@ public class Restaurantes extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Restaurantes(ConexionMySQL conexion) {
+	public Cervecerias(ConexionMySQL conexion) {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 840, 455);
 		contentPane = new JPanel();
@@ -36,7 +36,7 @@ public class Restaurantes extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("Restaurantes");
+		JLabel lblNewLabel = new JLabel("Cervecerías");
 		lblNewLabel.setForeground(new Color(213, 115, 43));
 		lblNewLabel.setFont(new Font("Sylfaen", Font.PLAIN, 23));
 		lblNewLabel.setBounds(340, 10, 220, 47);
@@ -45,31 +45,29 @@ public class Restaurantes extends JFrame {
 		
 		//Boton macarella 
 		
-		JButton btn_Macarella = new JButton("Macarella");
-		btn_Macarella.addActionListener(e -> {
-				nombreLocal = "Macarella";
-				Index Restu = new Index (conexion);
+		JButton btn_LaParaita = new JButton("La Paraita");
+		btn_LaParaita.addActionListener(e -> {
+				nombreLocal = "La Paraita";
+				Index Restu = new Index(conexion);
 				Restu.setVisible(true);
 		});
-		//btn_Macarella.setSelectedIcon(new ImageIcon("C:\\Users\\alexi\\Pictures\\Screenshots\\Captura de pantalla 2025-04-26 173053.png"));
-		btn_Macarella.setBackground(new Color(220, 90, 35));
-		btn_Macarella.setFont(new Font("Snap ITC", Font.ITALIC, 13));
-		btn_Macarella.setBounds(231, 128, 117, 27);
-		contentPane.add(btn_Macarella);
+		btn_LaParaita.setBackground(new Color(220, 90, 35));
+		btn_LaParaita.setFont(new Font("Snap ITC", Font.ITALIC, 13));
+		btn_LaParaita.setBounds(238, 105, 117, 27);
+		contentPane.add(btn_LaParaita);
 		
 		
 		//Boton taberna manue
 		
-		JButton btn_Manue = new JButton("Taberna Manue");
-		btn_Manue.addActionListener(e -> {
-			nombreLocal = "Taberna Manue";
-			Index Restu = new Index (conexion);
+		JButton btn_Monstruo = new JButton("Monstruo de la Cerveza");
+		btn_Monstruo.addActionListener(e -> {
+			nombreLocal = "Monstruo de la Cerveza";
+			Index Restu = new Index(conexion);
 			Restu.setVisible(true);
 	});
-		//btn_Manue.setSelectedIcon(new ImageIcon("C:\\Users\\alexi\\Pictures\\Screenshots\\Captura de pantalla 2025-04-26 173053.png"));
-		btn_Manue.setFont(new Font("Snap ITC", Font.ITALIC, 13));
-		btn_Manue.setBackground(new Color(220, 90, 35));
-		btn_Manue.setBounds(474, 128, 157, 27);
-		contentPane.add(btn_Manue);
+		btn_Monstruo.setFont(new Font("Snap ITC", Font.ITALIC, 13));
+		btn_Monstruo.setBackground(new Color(220, 90, 35));
+		btn_Monstruo.setBounds(425, 105, 213, 27);
+		contentPane.add(btn_Monstruo);
 	}
 }
