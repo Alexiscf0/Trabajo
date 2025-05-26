@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 26-05-2025 a las 10:25:26
+-- Tiempo de generación: 26-05-2025 a las 10:41:09
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -35,6 +35,10 @@ CREATE TABLE `locales` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
+-- RELACIONES PARA LA TABLA `locales`:
+--
+
+--
 -- Volcado de datos para la tabla `locales`
 --
 
@@ -60,6 +64,10 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
+-- RELACIONES PARA LA TABLA `usuarios`:
+--
+
+--
 -- Volcado de datos para la tabla `usuarios`
 --
 
@@ -79,6 +87,33 @@ CREATE TABLE `valoracion` (
   `Puntuacion` float NOT NULL,
   `ID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
+--
+-- RELACIONES PARA LA TABLA `valoracion`:
+--   `NombreUsuario`
+--       `usuarios` -> `NombreUsuario`
+--   `NombreLocal`
+--       `locales` -> `NombreLocal`
+--
+
+--
+-- Disparadores `valoracion`
+--
+DELIMITER $$
+CREATE TRIGGER `tr_actualizar_valoracion_insert` AFTER INSERT ON `valoracion` FOR EACH ROW BEGIN
+  DECLARE promedio FLOAT;
+
+  SELECT AVG(Puntuacion)
+  INTO promedio
+  FROM valoracion
+  WHERE NombreLocal = NEW.NombreLocal;
+
+  UPDATE locales
+  SET Valoracion = promedio
+  WHERE NombreLocal = NEW.NombreLocal;
+END
+$$
+DELIMITER ;
 
 --
 -- Índices para tablas volcadas
@@ -115,6 +150,28 @@ ALTER TABLE `valoracion`
 ALTER TABLE `valoracion`
   ADD CONSTRAINT `valoracion_ibfk_1` FOREIGN KEY (`NombreUsuario`) REFERENCES `usuarios` (`NombreUsuario`),
   ADD CONSTRAINT `valoracion_ibfk_2` FOREIGN KEY (`NombreLocal`) REFERENCES `locales` (`NombreLocal`);
+
+
+--
+-- Metadatos
+--
+USE `phpmyadmin`;
+
+--
+-- Metadatos para la tabla locales
+--
+
+--
+-- Metadatos para la tabla usuarios
+--
+
+--
+-- Metadatos para la tabla valoracion
+--
+
+--
+-- Metadatos para la base de datos sql7779162
+--
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
