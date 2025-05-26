@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 23-05-2025 a las 20:18:39
+-- Tiempo de generación: 26-05-2025 a las 10:25:26
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -101,7 +101,20 @@ ALTER TABLE `usuarios`
 -- Indices de la tabla `valoracion`
 --
 ALTER TABLE `valoracion`
-  ADD PRIMARY KEY (`ID`);
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `NombreUsuario` (`NombreUsuario`),
+  ADD KEY `NombreLocal` (`NombreLocal`);
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `valoracion`
+--
+ALTER TABLE `valoracion`
+  ADD CONSTRAINT `valoracion_ibfk_1` FOREIGN KEY (`NombreUsuario`) REFERENCES `usuarios` (`NombreUsuario`),
+  ADD CONSTRAINT `valoracion_ibfk_2` FOREIGN KEY (`NombreLocal`) REFERENCES `locales` (`NombreLocal`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
